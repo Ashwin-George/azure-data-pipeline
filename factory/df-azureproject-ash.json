@@ -1,0 +1,9 @@
+{
+	"name": "df-azureproject-ash",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1071cee5-15b5-48ce-8d1d-ae60ae6ab616",
+		"tenantId": "0a0be205-7bd9-4b05-8075-9332d6b4890a"
+	}
+}
