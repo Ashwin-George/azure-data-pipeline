@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach1",
+				"name": "incremantal_loop",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -90,7 +90,7 @@
 									"parameters": {
 										"container": "bronze",
 										"folder": {
-											"value": "@{item().table}_cdc",
+											"value": "@{item().table}",
 											"type": "Expression"
 										},
 										"file": {
@@ -326,6 +326,37 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "alert",
+				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "incremantal_loop",
+						"dependencyConditions": [
+							"Failed",
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "",
+					"body": {
+						"value": "{\n    \"pipeline_name\":\"@{pipeline().Pipeline}\"\n    \"pipeline_runid\":\"@{pipeline().RunId}\",\n}",
+						"type": "Expression"
+					}
 				}
 			}
 		],
